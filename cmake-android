@@ -1,0 +1,39 @@
+NDK=/opt/android-sdk-update-manager/ndk/20.0.5594570
+MINSDKVERSION=
+ABI=
+
+case $1 in
+    arm32)
+	ABI="armeabi-v7a"
+	API=17
+	;;
+    arm64)
+	ABI="arm64-v8a"
+	API=21
+	;;
+    x86)
+	ABI="x86"
+	API=17
+	;;
+    x86_64)
+	ABI="x86_64"
+	API=21
+	;;
+    *)
+	echo "Usage: $0 <arm32|arm64|x86|x86_64> [OTHER_ARGS]"
+	exit 1
+	;;
+esac
+
+MINSDKVERSION=android-${API}
+OTHER_ARGS=$2
+
+cmake \
+      -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
+      -DANDROID_ABI=$ABI \
+      -DANDROID_NATIVE_API_LEVEL=$MINSDKVERSION \
+      -DBUILD_JAVA=OFF \
+      -DBUILD_ANDROID_EXAMPLES=OFF \
+      -DANDROID_STL=c++_shared \
+      -DBUILD_SHARED_LIBS=ON \
+      $OTHER_ARGS

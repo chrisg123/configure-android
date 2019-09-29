@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#../../configure-android/cmake-android arm64 ..
+
+CONFIGURE=~/configure-android/cmake-android
+SRC_PATH=../..
+
+mkdir -p armeabi-v7a arm64-v8a x86 x86_64 && \
+    cd armeabi-v7a && ${CONFIGURE} arm32 ${SRC_PATH} ${1} && make -j7 && \
+    cd ../arm64-v8a && ${CONFIGURE} arm64 ${SRC_PATH} ${1} && make -j7 && \
+    cd ../x86 && ${CONFIGURE} x86 ${SRC_PATH} ${1} && make -j7 && \
+    cd ../x86_64 && ${CONFIGURE} x86_64 ${SRC_PATH} ${1} && make -j7 && \
+    cd ../

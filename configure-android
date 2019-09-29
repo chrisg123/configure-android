@@ -41,7 +41,7 @@ case $1 in
 esac
 
 if [ -z "$2" ]; then
-    WORK_DIR=${PWD}
+    WORK_DIR=$(pwd)
 else
     WORK_DIR=$(cd $2; pwd)
 fi
@@ -81,4 +81,4 @@ echo "STRIP   :  ${STRIP}"
 echo "---------"
 echo ""
 
-${WORK_DIR}/configure --host ${TRIPLE}
+${WORK_DIR}/configure --host ${TRIPLE} --prefix $(pwd)/install ${3} && make -j7 && make install
